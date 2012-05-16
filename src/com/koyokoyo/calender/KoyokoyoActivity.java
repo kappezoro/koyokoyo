@@ -7,6 +7,8 @@ import com.koyokoyo.calender.R.id;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -19,6 +21,10 @@ public class KoyokoyoActivity extends Activity {
 	 * 
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
+	
+	
+	
+	int monthCount =0;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,26 +34,76 @@ public class KoyokoyoActivity extends Activity {
 		int month = Calendar.getInstance().get(Calendar.MONTH)+1;
 		MonthlyCalendar monthlyCalendar = new MonthlyCalendar(currentYear,
 				month);
-		ArrayList<String> dayOfTheWeekList = new ArrayList<String>();
 		ArrayList<String> dateList = monthlyCalendar.calcFields();
-
-		dayOfTheWeekList.add("日");
-		dayOfTheWeekList.add("月");
-		dayOfTheWeekList.add("火");
-		dayOfTheWeekList.add("水");
-		dayOfTheWeekList.add("木");
-		dayOfTheWeekList.add("金");
-		dayOfTheWeekList.add("土");
+		
 
 
 		TextView titleView = (TextView) findViewById(id.title);
 		TextView yearView = (TextView) findViewById(id.year);
-		TextView monthView = (TextView) findViewById(id.month);
+		TextView monthView = (TextView) findViewById(id.currentMonth);
+		TextView upView = (TextView) findViewById(id.up);
+		TextView downView = (TextView) findViewById(id.down);
+	
 		// テキストビューのテキストを設定します
 		titleView.setText(R.string.title);
 	
 		String monthName = null;
-		switch(Calendar.getInstance().get(Calendar.MONTH)+1){
+		//int currenMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
+		
+		upView.setText(R.string.up);
+		downView.setText(R.string.down);
+
+		
+		monthName = monthSwitch(monthCount);
+
+		yearView.append(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+		monthView.append(monthName);
+		
+		TextView monView = (TextView) findViewById(id.mon);
+		TextView tueView = (TextView) findViewById(id.tue);
+		TextView wedView = (TextView) findViewById(id.wed);
+		TextView thuView = (TextView) findViewById(id.thu);
+		TextView friView = (TextView) findViewById(id.fri);
+		TextView satView = (TextView) findViewById(id.sat);
+		TextView sunView = (TextView) findViewById(id.sun);
+		
+		monView.setText(R.string.mon);
+		tueView.setText(R.string.tue);
+		wedView.setText(R.string.wed);
+		thuView.setText(R.string.thu);
+		friView.setText(R.string.fri);
+		satView.setText(R.string.sat);
+		sunView.setText(R.string.sun);
+
+		ArrayAdapter<String> dateAdapter = new ArrayAdapter<String>(
+				getApplicationContext(), android.R.layout.simple_list_item_1,
+				dateList);
+
+		GridView gridViewDate = (GridView) findViewById(R.id.date);
+		gridViewDate.setAdapter(dateAdapter);
+		
+		
+	}
+	
+
+	public void onClickButtonUp(View view){
+		monthCount++;
+		monthSwitch(monthCount);
+		Log.i("Next", String.valueOf(monthCount));
+		Log.i("NextMonth", monthSwitch(monthCount));
+		
+    }
+	
+	public void onClickButtonDown(View view){
+		monthCount--;
+		monthSwitch(monthCount);
+		Log.i("Previous", String.valueOf(monthCount));
+		Log.i("PreviousMonth", monthSwitch(monthCount));
+    }
+
+	private String monthSwitch(int monthCount) {
+		String monthName = null;
+		switch(Calendar.getInstance().get(Calendar.MONTH)+1+monthCount){
 		case 1:
 			monthName = "January";
 			break;
@@ -85,22 +141,7 @@ public class KoyokoyoActivity extends Activity {
 			monthName = "December";
 			break;
 		}
-
-		yearView.append(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
-		monthView.append(monthName);
-
-		ArrayAdapter<String> dayOfTheWeekAdapter = new ArrayAdapter<String>(
-				getApplicationContext(), android.R.layout.simple_list_item_1,
-				dayOfTheWeekList);
-
-		GridView gridViewDayOfTheWeek = (GridView) findViewById(R.id.dayOfTheWeek);
-		gridViewDayOfTheWeek.setAdapter(dayOfTheWeekAdapter);
-
-		ArrayAdapter<String> dateAdapter = new ArrayAdapter<String>(
-				getApplicationContext(), android.R.layout.simple_list_item_1,
-				dateList);
-
-		GridView gridViewDate = (GridView) findViewById(R.id.date);
-		gridViewDate.setAdapter(dateAdapter);
+		return monthName;
 	}
+	
 }

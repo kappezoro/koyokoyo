@@ -3,7 +3,6 @@
 
     <string name="app_name">Koyokoyo</string>
     <string name="title">Koyokoyo</string>
-    
     <string name="year">YEAR</string>
     <string name="mon">Mon</string>
     <string name="tue">Tue</string>
@@ -14,5 +13,7 @@
     <string name="sun">Sun</string>
     <string name="month">MONTH</string>
     <string name="date">DATE</string>
+    <string name="up">Next</string>
+    <string name="down">Previous</string>
 
 </resources>

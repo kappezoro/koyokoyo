@@ -17,21 +17,18 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="24sp" />
-
-    <TextView
+   <!--   <TextView
         android:id="@+id/month"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="24sp" />
+        android:textSize="24sp" />-->
 
-    <GridView
-        android:id="@+id/dayOfTheWeek"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:horizontalSpacing="0dp"
-        android:numColumns="7"
-        android:verticalSpacing="0dp" />
+
+    
+   <include android:id="@+id/month" layout="@layout/month" /> 
+   <include android:id="@+id/week" layout="@layout/week" /> 
+
 
     <GridView
         android:id="@+id/date"
