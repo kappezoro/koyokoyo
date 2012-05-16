@@ -21,44 +21,41 @@ public class KoyokoyoActivity extends Activity {
 	 * 
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
-	
-	
-	
-	int monthCount =0;
+
+	int monthCount = 0;
+	int month = Calendar.getInstance().get(Calendar.MONTH) + 1;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
 		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-		int month = Calendar.getInstance().get(Calendar.MONTH)+1;
 		MonthlyCalendar monthlyCalendar = new MonthlyCalendar(currentYear,
 				month);
 		ArrayList<String> dateList = monthlyCalendar.calcFields();
-		
-
 
 		TextView titleView = (TextView) findViewById(id.title);
 		TextView yearView = (TextView) findViewById(id.year);
 		TextView monthView = (TextView) findViewById(id.currentMonth);
 		TextView upView = (TextView) findViewById(id.up);
 		TextView downView = (TextView) findViewById(id.down);
-	
+
 		// テキストビューのテキストを設定します
 		titleView.setText(R.string.title);
-	
+
 		String monthName = null;
-		//int currenMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
-		
+		// int currenMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
+
 		upView.setText(R.string.up);
 		downView.setText(R.string.down);
 
-		
 		monthName = monthSwitch(monthCount);
 
-		yearView.append(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+		yearView.append(String.valueOf(Calendar.getInstance()
+				.get(Calendar.YEAR)));
 		monthView.append(monthName);
-		
+
 		TextView monView = (TextView) findViewById(id.mon);
 		TextView tueView = (TextView) findViewById(id.tue);
 		TextView wedView = (TextView) findViewById(id.wed);
@@ -66,7 +63,7 @@ public class KoyokoyoActivity extends Activity {
 		TextView friView = (TextView) findViewById(id.fri);
 		TextView satView = (TextView) findViewById(id.sat);
 		TextView sunView = (TextView) findViewById(id.sun);
-		
+
 		monView.setText(R.string.mon);
 		tueView.setText(R.string.tue);
 		wedView.setText(R.string.wed);
@@ -81,29 +78,26 @@ public class KoyokoyoActivity extends Activity {
 
 		GridView gridViewDate = (GridView) findViewById(R.id.date);
 		gridViewDate.setAdapter(dateAdapter);
-		
-		
 	}
-	
 
-	public void onClickButtonUp(View view){
+	public void onClickButtonUp(View view) {
 		monthCount++;
 		monthSwitch(monthCount);
 		Log.i("Next", String.valueOf(monthCount));
 		Log.i("NextMonth", monthSwitch(monthCount));
-		
-    }
-	
-	public void onClickButtonDown(View view){
+
+	}
+
+	public void onClickButtonDown(View view) {
 		monthCount--;
 		monthSwitch(monthCount);
 		Log.i("Previous", String.valueOf(monthCount));
 		Log.i("PreviousMonth", monthSwitch(monthCount));
-    }
+	}
 
 	private String monthSwitch(int monthCount) {
 		String monthName = null;
-		switch(Calendar.getInstance().get(Calendar.MONTH)+1+monthCount){
+		switch (month + monthCount) {
 		case 1:
 			monthName = "January";
 			break;
@@ -143,5 +137,5 @@ public class KoyokoyoActivity extends Activity {
 		}
 		return monthName;
 	}
-	
+
 }

@@ -42,10 +42,10 @@ public class MonthlyCalendar {
 		int row = 0;
 		int column = startDay - 1; // startDay: 日曜日 = 1, 月曜日 = 2, ...
 		ArrayList<String> list = new ArrayList<String>();
-		int start =3;
-		while(start!= calendar.get(Calendar.DAY_OF_WEEK)){
+		int start =startDay;
+		while(start>1){
 			list.add("");
-			start++;
+			start--;
 		}
 
 		for (int date = 1; date <= lastDate; date++) {
