@@ -23,48 +23,84 @@ public class KoyokoyoActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		
-		
-		
+
 		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-		//int currentMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
-		int currentMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
-		int month =1;
-		MonthlyCalendar monthlyCalendar = new MonthlyCalendar(currentYear, month);
-		ArrayList<Integer> list =monthlyCalendar.calcFields();
-		//Calendar calendar =Calendar.getInstance();
-	    //for (month = 1; month <= 12; month++) {
-			//Log.e("かれんだー", currentYear + "年" + currentMonth + "月");
-			//Log.e("かれんだー", monthlyCalendar.toString());
-	    	//list.add( currentMonth + "月");
-	    	//list.add("日");
-			//list.add("月");
-			//list.add("火");
-			//list.add("水");
-			//list.add("木");
-			//list.add("金");
-			//list.add("土");
-			
-			//while(Calender.DATE)
-	    	//list.add(String.valueOf(Calendar.DATE));
-	   // }
+		int month = Calendar.getInstance().get(Calendar.MONTH)+1;
+		MonthlyCalendar monthlyCalendar = new MonthlyCalendar(currentYear,
+				month);
+		ArrayList<String> dayOfTheWeekList = new ArrayList<String>();
+		ArrayList<String> dateList = monthlyCalendar.calcFields();
+
+		dayOfTheWeekList.add("日");
+		dayOfTheWeekList.add("月");
+		dayOfTheWeekList.add("火");
+		dayOfTheWeekList.add("水");
+		dayOfTheWeekList.add("木");
+		dayOfTheWeekList.add("金");
+		dayOfTheWeekList.add("土");
+
 
 		TextView titleView = (TextView) findViewById(id.title);
 		TextView yearView = (TextView) findViewById(id.year);
 		TextView monthView = (TextView) findViewById(id.month);
 		// テキストビューのテキストを設定します
 		titleView.setText(R.string.title);
-		// yearView.setText(R.string.year);
-		// monthView.setText(R.string.month);
+	
+		String monthName = null;
+		switch(Calendar.getInstance().get(Calendar.MONTH)+1){
+		case 1:
+			monthName = "January";
+			break;
+		case 2:
+			monthName = "Feburuary";
+			break;
+		case 3:
+			monthName = "March";
+			break;
+		case 4:
+			monthName = "April";
+			break;
+		case 5:
+			monthName = "May";
+			break;
+		case 6:
+			monthName = "June";
+			break;
+		case 7:
+			monthName = "July";
+			break;
+		case 8:
+			monthName = "August";
+			break;
+		case 9:
+			monthName = "September";
+			break;
+		case 10:
+			monthName = "October";
+			break;
+		case 11:
+			monthName = "November";
+			break;
+		case 12:
+			monthName = "December";
+			break;
+		}
 
-		yearView.setText(R.string.year);
-		monthView.setText(R.string.month);
+		yearView.append(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+		monthView.append(monthName);
 
-		ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(
+		ArrayAdapter<String> dayOfTheWeekAdapter = new ArrayAdapter<String>(
 				getApplicationContext(), android.R.layout.simple_list_item_1,
-				list);
+				dayOfTheWeekList);
 
-		GridView gridView = (GridView) findViewById(R.id.View1);
-		gridView.setAdapter(adapter);
+		GridView gridViewDayOfTheWeek = (GridView) findViewById(R.id.dayOfTheWeek);
+		gridViewDayOfTheWeek.setAdapter(dayOfTheWeekAdapter);
+
+		ArrayAdapter<String> dateAdapter = new ArrayAdapter<String>(
+				getApplicationContext(), android.R.layout.simple_list_item_1,
+				dateList);
+
+		GridView gridViewDate = (GridView) findViewById(R.id.date);
+		gridViewDate.setAdapter(dateAdapter);
 	}
 }
