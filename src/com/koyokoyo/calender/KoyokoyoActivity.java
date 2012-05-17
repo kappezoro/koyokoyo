@@ -21,18 +21,21 @@ public class KoyokoyoActivity extends Activity {
 	 * 
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
+	Bundle savedInstanceState;
 
 	int monthCount = 0;
 	int month = Calendar.getInstance().get(Calendar.MONTH) + 1;
+	int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+	int yearCount =0;
+	String monthName = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-		MonthlyCalendar monthlyCalendar = new MonthlyCalendar(currentYear,
-				month);
+		MonthlyCalendar monthlyCalendar = new MonthlyCalendar(currentYear+yearCount,
+				month+monthCount);
 		ArrayList<String> dateList = monthlyCalendar.calcFields();
 
 		TextView titleView = (TextView) findViewById(id.title);
@@ -40,20 +43,14 @@ public class KoyokoyoActivity extends Activity {
 		TextView monthView = (TextView) findViewById(id.currentMonth);
 		TextView upView = (TextView) findViewById(id.up);
 		TextView downView = (TextView) findViewById(id.down);
-
-		// テキストビューのテキストを設定します
 		titleView.setText(R.string.title);
-
-		String monthName = null;
-		// int currenMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
-
 		upView.setText(R.string.up);
 		downView.setText(R.string.down);
 
 		monthName = monthSwitch(monthCount);
 
 		yearView.append(String.valueOf(Calendar.getInstance()
-				.get(Calendar.YEAR)));
+				.get(Calendar.YEAR)+yearCount));
 		monthView.append(monthName);
 
 		TextView monView = (TextView) findViewById(id.mon);
@@ -83,16 +80,25 @@ public class KoyokoyoActivity extends Activity {
 	public void onClickButtonUp(View view) {
 		monthCount++;
 		monthSwitch(monthCount);
+		if (month + monthCount > 12) {
+			yearCount++;
+			month = 1;
+			monthCount = 0;
+		}
+		onCreate(savedInstanceState);
 		Log.i("Next", String.valueOf(monthCount));
-		Log.i("NextMonth", monthSwitch(monthCount));
-
 	}
 
 	public void onClickButtonDown(View view) {
 		monthCount--;
 		monthSwitch(monthCount);
+		if (month + monthCount < 1) {
+			yearCount--;
+			month = 12;
+			monthCount = 0;
+		}
+		onCreate(savedInstanceState);
 		Log.i("Previous", String.valueOf(monthCount));
-		Log.i("PreviousMonth", monthSwitch(monthCount));
 	}
 
 	private String monthSwitch(int monthCount) {

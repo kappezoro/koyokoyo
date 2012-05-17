@@ -17,14 +17,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="24sp" />
-   <!--   <TextView
-        android:id="@+id/month"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="24sp" />-->
-
-
     
    <include android:id="@+id/month" layout="@layout/month" /> 
    <include android:id="@+id/week" layout="@layout/week" /> 
