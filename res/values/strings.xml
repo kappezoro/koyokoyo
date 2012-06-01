@@ -15,5 +15,11 @@
     <string name="date">DATE</string>
     <string name="up">Next</string>
     <string name="down">Previous</string>
+    
+    <string name="goal">Goal : </string>
+	<string name="new_text">新規</string>
+	<string name="insert_text">登録</string>
+	<string name="cancel_text">キャンセル</string>
+	<string name="ex_goal">目標を入力してください</string>
 
 </resources>

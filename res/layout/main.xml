@@ -2,14 +2,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="@color/olive">
 
     <TextView
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+         />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:paddingBottom="30dp"
+            android:paddingTop="30dp"
+            android:text="@string/goal"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/goal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.96"
+            android:inputType="text" />
+
+        <ImageButton
+            android:id="@+id/newButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@null"
+            android:contentDescription="@string/new_text"
+            android:src="@drawable/pluse_32" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/year"
@@ -17,10 +50,14 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="24sp" />
-    
-   <include android:id="@+id/month" layout="@layout/month" /> 
-   <include android:id="@+id/week" layout="@layout/week" /> 
 
+    <include
+        android:id="@+id/month"
+        layout="@layout/month" />
+
+    <include
+        android:id="@+id/week"
+        layout="@layout/week" />
 
     <GridView
         android:id="@+id/date"

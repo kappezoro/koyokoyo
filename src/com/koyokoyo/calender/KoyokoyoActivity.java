@@ -2,17 +2,26 @@ package com.koyokoyo.calender;
 
 
 import java.util.ArrayList;
+
 import java.util.Calendar;
 
 import com.koyokoyo.calender.R.id;
 import com.koyokoyo.calender.logic.CalendarLogic;
 import com.koyokoyo.calender.service.SwitchValueService;
+import com.koyokoyo.dto.Goal;
+import com.koyokoyo.util.DBAdapter;
+
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -27,6 +36,8 @@ public class KoyokoyoActivity extends Activity {
 	int yearCount = 0;
 	String monthName = null;
 	
+	final DBAdapter dbAdapter = new DBAdapter(KoyokoyoActivity.this);
+
 	public class BindData {  
         int iconId;  
         String title;  
@@ -40,7 +51,37 @@ public class KoyokoyoActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.main);	
+		initializedGoal();
+		findViewById(R.id.newButton).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				LayoutInflater li = LayoutInflater.from(v.getContext());
+				final View goalView = li.inflate(R.layout.registrant_goal_view, null);
+
+				new AlertDialog.Builder(v.getContext())
+						.setCancelable(true)
+						.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								EditText et = (EditText)goalView.findViewById(R.id.input_goal);
+								Goal goalDto = new Goal();
+								goalDto.setDetail(et.getText().toString());
+								goalDto.setGoalAchievementFlg(Goal.NON_ACHIEVEMENT);
+								dbAdapter.open();
+								dbAdapter.insertGoal(goalDto);
+								dbAdapter.close();
+								TextView tv = (TextView)findViewById(R.id.goal);
+								tv.setText(goalDto.getDetail());
+							}
+						})
+						.setNegativeButton("キャンセル", null)
+						.setView(goalView)
+						.show();
+			}
+		});
+
+		
 		SwitchValueService switchValueService = new SwitchValueService();
 
 		CalendarLogic monthlyCalendar = new CalendarLogic(currentYear
@@ -117,6 +158,16 @@ public class KoyokoyoActivity extends Activity {
 		}
 		onCreate(savedInstanceState);
 		Log.i("Previous", String.valueOf(monthCount));
+	}
+	
+	/**
+	 * 目標部分の初期化
+	 */
+	private void initializedGoal() {
+		TextView goal = (TextView)findViewById(R.id.goal);
+		dbAdapter.open();
+		goal.setText(dbAdapter.getLatestGoal());
+		dbAdapter.close();
 	}
 
 }
